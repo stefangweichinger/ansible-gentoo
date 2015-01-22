@@ -1,10 +1,18 @@
 - name: Copy Over Stage Retrieval Script
   template: src=get_stage.sh dest=/mnt/gentoo/ mode=755
+  when: not stage3_local
+
+- name: Download Stage3 Tarball
+  command: /mnt/gentoo/get_stage.sh chdir=/mnt/gentoo
+  tags:
+    - filesystem
+  when: not stage3_local
 
 - name: Download Stage3 Tarball
   copy: src=/home/sgw/Downloads/stage3-amd64-20141204.tar.bz2  dest=/mnt/gentoo/stage3.tbz2
   tags:
     - filesystem
+  when: stage3_local
 
 - name: Unarchive Stage3 Tarball
   command: tar xjpf stage3.tbz2
@@ -34,6 +42,7 @@
 
 - name: Cleanup get_stage.sh
   file: path=/mnt/gentoo/get_stage.sh state=absent
+  when: not stage3_local
 
 - name: copy resolv.conf
   command: cp -L /etc/resolv.conf /mnt/gentoo/etc/ creates=/mnt/gentoo/etc/resolv.conf
