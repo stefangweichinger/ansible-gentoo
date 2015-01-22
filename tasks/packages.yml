@@ -5,3 +5,7 @@
       creates: /mnt/gentoo/bin/ip
     - name: vim
       creates: /mnt/gentoo/usr/bin/vim
+    - name: git
+      creates: /mnt/gentoo/usr/bin/git
+    - name: screen
+      creates: /mnt/gentoo/usr/bin/screen

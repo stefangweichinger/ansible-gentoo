@@ -1,0 +1,8 @@
+
+[Match]
+Name=eth*
+
+[Network]
+DHCP=v4
+## Address=172.32.99.x/24
+## Gateway=172.32.99.250

@@ -2,7 +2,7 @@
   template: src=get_stage.sh dest=/mnt/gentoo/ mode=755
 
 - name: Download Stage3 Tarball
-  command: /mnt/gentoo/get_stage.sh chdir=/mnt/gentoo
+  copy: src=/home/sgw/Downloads/stage3-amd64-20141204.tar.bz2  dest=/mnt/gentoo/stage3.tbz2
   tags:
     - filesystem
 
@@ -43,8 +43,8 @@
   tags:
     - chroot
 
-- name: emerge-webrsync
-  command: chroot /mnt/gentoo bash -c 'source /etc/profile; /usr/bin/emerge-webrsync' creates=/mnt/gentoo/usr/portage/xfce-extra
+- name: emerge sync
+  command: chroot /mnt/gentoo bash -c 'source /etc/profile;SYNC="rsync://172.32.99.6/gentoo-portage" /usr/bin/emerge --sync' creates=/mnt/gentoo/usr/portage/xfce-extra
   tags:
     - chroot
 
@@ -65,5 +65,11 @@
 
 - name: Create Make.conf
   copy: src=make.conf dest=/mnt/gentoo/etc/portage/make.conf
+
+- name: Create locale.conf
+  copy: src=locale.conf dest=/mnt/gentoo/etc/locale.conf
+
+- name: Create networkd config
+  copy: src=10-eth.network dest=/mnt/gentoo/etc/systemd/network/10-eth.network
 
 - command: touch /tmp/filesystem_completed
