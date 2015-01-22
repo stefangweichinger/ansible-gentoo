@@ -4,6 +4,22 @@ ansible-gentoo
 This role demonstrates the automatic configuration of a gentoo system from
 minimal install to first boot.
 
+
+Changes in fork by stefangweichinger
+------------------------------------
+
+ * several changes to have systemd as init system
+ * configure network with systemd-networkd (DHCP)
+ * configure locale
+ * kernel 3.17.7
+ * fetch stage3 from local download (speed up at tests))
+ * kernel-config and fstab matches use with virtio (KVM)
+
+... and several more changes ...
+
+planned: a version without LVM
+
+
 Role Variables
 --------------
 
